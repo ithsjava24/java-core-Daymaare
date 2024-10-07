@@ -11,10 +11,6 @@ public class Warehouse {
     private final Map<UUID, ProductRecord> products = new ConcurrentHashMap<>();
     private final Set<UUID> changedProducts = ConcurrentHashMap.newKeySet();
 
-    private Warehouse() {
-        this.name = null; // Default name if needed
-    }
-
     private Warehouse(String name) {
         this.name = name;
     }
@@ -28,6 +24,8 @@ public class Warehouse {
     }
 
     public ProductRecord addProduct(UUID uuid, String name, Category category, BigDecimal price) {
+
+
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException();
         }
@@ -41,7 +39,7 @@ public class Warehouse {
             throw new IllegalArgumentException();
         }
         if (price == null || price.compareTo(BigDecimal.ZERO) < 0) {
-            price = BigDecimal.ZERO; // Set price to 0 if null or negative
+            price = BigDecimal.ZERO;
         }
 
         ProductRecord product = new ProductRecord(uuid, name, category, price);
@@ -66,10 +64,9 @@ public class Warehouse {
             throw new IllegalArgumentException();
         }
         ProductRecord product = products.get(uuid);
-        if (product == null) {
-            throw new IllegalArgumentException();
+        if (product == null ) {
+            throw new IllegalArgumentException("Product with that id doesn't exist.");
         }
-        // Mark product as changed
         changedProducts.add(uuid);
         products.put(uuid, new ProductRecord(uuid, product.name(), product.category(), newPrice));
     }

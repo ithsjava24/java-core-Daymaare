@@ -28,7 +28,6 @@ public record ProductRecord(UUID uuid, String name, Category category, BigDecima
                 uuid, name, category.getName(), price);
     }
 
-    // Implement equals and hashCode for proper comparisons
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
