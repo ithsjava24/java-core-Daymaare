@@ -37,7 +37,6 @@ public class Warehouse {
             throw new IllegalArgumentException("Product with that id already exists, use updateProduct for updates.");
         }
         products.put(uuid, product);
-        //changedProducts.add(uuid);
         return product;
     }
 
@@ -46,6 +45,9 @@ public class Warehouse {
     }
 
     public List<ProductRecord> getProducts() {
+        if(products.isEmpty()) {
+            return Collections.emptyList();
+        }
         return List.copyOf(products.values());
     }
 
