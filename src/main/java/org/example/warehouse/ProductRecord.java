@@ -6,13 +6,13 @@ import java.util.UUID;
 public record ProductRecord(UUID uuid, String name, Category category, BigDecimal price) {
     public ProductRecord {
         if (uuid == null) {
-            throw new IllegalArgumentException();
+            uuid = UUID.randomUUID();
         }
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Product name can't be null or empty.");
         }
         if (category == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Category can't be null.");
         }
         if (price == null) {
             price = BigDecimal.ZERO; // Set price to zero if null
@@ -28,6 +28,7 @@ public record ProductRecord(UUID uuid, String name, Category category, BigDecima
                 uuid, name, category.getName(), price);
     }
 
+    // Implement equals and hashCode for proper comparisons
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
