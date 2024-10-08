@@ -13,7 +13,7 @@ public class Category {
 
     public static Category of(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Category can't be null.");
+            throw new IllegalArgumentException("Category name can't be null");
         }
         return instances.computeIfAbsent(name, Category::new);
     }
