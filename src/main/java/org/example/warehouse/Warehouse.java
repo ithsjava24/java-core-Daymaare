@@ -21,21 +21,27 @@ public class Warehouse {
     }
 
     public static Warehouse getInstance() {
-        return getInstance(null);
+        return new Warehouse("Default");
     }
 
     public static Warehouse getInstance(String name) {
-        return instances.computeIfAbsent(name != null ? name : "default", Warehouse::new);
+        if (instances.containsKey(name)) {
+            return instances.get(name);
+        } else {
+            Warehouse instance = new Warehouse(name);
+            instances.put(name, instance);
+            return instance;
+        }
     }
 
     public ProductRecord addProduct(UUID uuid, String name, Category category, BigDecimal price) {
-        ProductRecord product = new ProductRecord(uuid, name, category, price);
         if(uuid == null) {
             uuid = UUID.randomUUID();
         }
         if (products.containsKey(uuid)) {
             throw new IllegalArgumentException("Product with that id already exists, use updateProduct for updates.");
         }
+        ProductRecord product = new ProductRecord(uuid, name, category, price);
         products.put(uuid, product);
         return product;
     }
