@@ -54,7 +54,7 @@ public class Warehouse {
         if(products.isEmpty()) {
             return Collections.emptyList();
         }
-        return List.copyOf(products.values());
+        return List.copyOf(products.values()).reversed();
     }
 
     public Optional<ProductRecord> getProductById(UUID uuid) {
