@@ -159,13 +159,13 @@ class WarehouseTest {
         @Test
         @DisplayName("valid id returns product")
         void getProductByIdShouldReturnProductWithThatId() {
-            assertThat(warehouse.getProductById(addedProduct.uuid())).contains(addedProduct);
+            assertThat(warehouse.getProductByUuid(addedProduct.uuid())).contains(addedProduct);
         }
 
         @Test
         @DisplayName("invalid id returns empty")
         void getSingleProductWithInvalidIdShouldBeEmpty() {
-            assertThat(warehouse.getProductById(UUID.fromString(UUID_name))).isEmpty();
+            assertThat(warehouse.getProductByUuid(UUID.fromString(UUID_name))).isEmpty();
         }
 
         @Test
@@ -202,7 +202,7 @@ class WarehouseTest {
         @DisplayName("changing a products price should be saved")
         void changingAProductsNameShouldBeSaved() {
             warehouse.updateProductPrice(addedProducts.get(1).uuid(), BigDecimal.valueOf(311, 2));
-            assertThat(warehouse.getProductById(addedProducts.get(1).uuid())).isNotEmpty()
+            assertThat(warehouse.getProductByUuid(addedProducts.get(1).uuid())).isNotEmpty()
                     .get()
                     .hasFieldOrPropertyWithValue("price", BigDecimal.valueOf(311, 2));
         }
