@@ -2,8 +2,9 @@ package org.example.warehouse;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
-public record ProductRecord(UUID uuid, String name, Category category, BigDecimal price) {
+public record ProductRecord(UUID uuid, String name, Category category, BigDecimal price, LocalDateTime updatedAt) {
     public ProductRecord {
         if (uuid == null) {
             uuid = UUID.randomUUID();
@@ -15,20 +16,13 @@ public record ProductRecord(UUID uuid, String name, Category category, BigDecima
             throw new IllegalArgumentException("Category can't be null.");
         }
         if (price == null) {
-            price = BigDecimal.ZERO; // Set price to zero if null
+            price = BigDecimal.ZERO;
         }
         if (price.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException();
         }
     }
 
-    @Override
-    public String toString() {
-        return String.format("ProductRecord{uuid=%s, name='%s', category=%s, price=%s}",
-                uuid, name, category.getName(), price);
-    }
-
-    // Implement equals and hashCode for proper comparisons
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
